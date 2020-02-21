@@ -1,8 +1,7 @@
-package guru.springframework.spring5webapp.model;
+package guru.springframework.spring5webapp.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -11,10 +10,11 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String title;
     private String isbn;
 
-    @OneToOne
+    @ManyToOne
     private Publisher publisher;
 
     @ManyToMany
@@ -28,19 +28,6 @@ public class Book {
     public Book(String title, String isbn) {
         this.title = title;
         this.isbn = isbn;
-    }
-
-    public Book(String title, String isbn, Publisher publisher) {
-        this.title = title;
-        this.isbn = isbn;
-        this.publisher = publisher;
-    }
-
-    public Book(String title, String isbn, Publisher publisher, Set<Author> authors) {
-        this.title = title;
-        this.isbn = isbn;
-        this.publisher = publisher;
-        this.authors = authors;
     }
 
     public Long getId() {
@@ -89,8 +76,6 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", authors=" + authors +
                 '}';
     }
 
